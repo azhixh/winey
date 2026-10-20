@@ -11,7 +11,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { getHistory } from '../services/historyService';
-import { searchProducts } from '../services/api';
+import { searchProducts, getProductByBarcode } from '../services/api';
 import type { HistoryRecord } from '../types';
 
 interface IngredientGlossaryItem {
@@ -103,16 +103,27 @@ export const SearchPage: React.FC = () => {
 
     const timer = setTimeout(async () => {
       setApiLoading(true);
+      const isBarcode = /^\d{8,14}$/.test(query.trim());
       try {
-        const res = await searchProducts(query);
-        if (res && Array.isArray(res.products)) {
-          setApiResults(res.products);
-          setApiUnavailable(false);
-        } else if (Array.isArray(res)) {
-          setApiResults(res);
-          setApiUnavailable(false);
+        if (isBarcode) {
+          const product = await getProductByBarcode(query.trim());
+          if (product) {
+            setApiResults([product]);
+            setApiUnavailable(false);
+          } else {
+            setApiResults([]);
+          }
         } else {
-          setApiResults([]);
+          const res = await searchProducts(query);
+          if (res && Array.isArray(res.products)) {
+            setApiResults(res.products);
+            setApiUnavailable(false);
+          } else if (Array.isArray(res)) {
+            setApiResults(res);
+            setApiUnavailable(false);
+          } else {
+            setApiResults([]);
+          }
         }
       } catch (e) {
         setApiResults([]);

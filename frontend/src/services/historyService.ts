@@ -1,6 +1,7 @@
 /**
  * Local-First Guest History Service
  * Persists evaluated beverage reports safely in LocalStorage.
+ * Handles malformed, corrupted, or outdated stored records safely.
  */
 
 import type { HistoryRecord, ScoringEngineResult } from '../types';
@@ -13,7 +14,18 @@ export function getHistory(): HistoryRecord[] {
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed;
+
+    // Filter and sanitize items to prevent crashing from malformed records
+    return parsed.filter((item): item is HistoryRecord => {
+      return (
+        item &&
+        typeof item === 'object' &&
+        typeof item.id === 'string' &&
+        typeof item.beverage_type === 'string' &&
+        item.result &&
+        typeof item.result === 'object'
+      );
+    });
   } catch (e) {
     console.error('Failed to load history from LocalStorage:', e);
     return [];
@@ -27,7 +39,8 @@ export function getHistoryItem(id: string): HistoryRecord | undefined {
 
 export function saveHistoryItem(
   result: ScoringEngineResult,
-  customName?: string
+  customName?: string,
+  inputs?: Record<string, any>
 ): HistoryRecord {
   const items = getHistory();
   const id = `scan_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
@@ -43,6 +56,7 @@ export function saveHistoryItem(
     is_critical: result.critical_override?.is_critical || false,
     rules_version: result.rules_version,
     dataset_version: result.dataset_version,
+    inputs: inputs || {},
     result,
   };
 

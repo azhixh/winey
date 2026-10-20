@@ -129,6 +129,7 @@ export interface HistoryRecord {
   is_critical: boolean;
   rules_version: string;
   dataset_version: string;
+  inputs?: Record<string, any>;
   result: ScoringEngineResult;
 }
 

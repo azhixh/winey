@@ -13,7 +13,7 @@ import {
   BookOpen,
   Info,
 } from 'lucide-react';
-import { getScoringBenchmarks } from '../services/api';
+import { getScoringBenchmarks, getCategoryReference } from '../services/api';
 import type { ReferenceRangesData, BeverageCategory } from '../types';
 
 interface CategoryConfig {
@@ -241,6 +241,7 @@ export const DrinksPage: React.FC = () => {
   const navigate = useNavigate();
 
   const [benchmarksData, setBenchmarksData] = useState<ReferenceRangesData | null>(null);
+  const [directBenchmarks, setDirectBenchmarks] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -250,12 +251,29 @@ export const DrinksPage: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
     setLoading(true);
-    getScoringBenchmarks()
-      .then((data) => {
-        if (isMounted) {
-          setBenchmarksData(data);
+
+    // Call GET /api/reference/{category}
+    getCategoryReference(selectedCategory.id)
+      .then((refData) => {
+        if (isMounted && refData?.benchmarks) {
+          setDirectBenchmarks(refData.benchmarks);
+          setBenchmarksData({
+            dataset_version: refData.dataset_version || '1.0.0',
+            last_updated: refData.generated_at || '2026-10-20',
+            categories: { [selectedCategory.categoryKey]: refData.benchmarks },
+          });
           setError(null);
         }
+      })
+      .catch(() => {
+        // Fallback to bulk benchmarks endpoint GET /api/scoring/benchmarks
+        return getScoringBenchmarks().then((data) => {
+          if (isMounted) {
+            setBenchmarksData(data);
+            setDirectBenchmarks(null);
+            setError(null);
+          }
+        });
       })
       .catch((err) => {
         if (isMounted) {
@@ -266,13 +284,15 @@ export const DrinksPage: React.FC = () => {
       .finally(() => {
         if (isMounted) setLoading(false);
       });
+
     return () => {
       isMounted = false;
     };
-  }, [routeCategory]);
+  }, [routeCategory, selectedCategory.id, selectedCategory.categoryKey]);
 
-  // Extract category benchmarks from the returned dataset
+  // Extract category benchmarks from direct endpoint or returned dataset
   const categoryBenchmarks =
+    directBenchmarks ||
     benchmarksData?.categories?.[selectedCategory.categoryKey] ||
     (selectedCategory.id === 'wine' ? benchmarksData?.categories?.['Wine_red'] : null);
 

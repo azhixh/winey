@@ -470,18 +470,23 @@ export const ResultPage: React.FC = () => {
                   {(result.wine_model.predicted_quality || result.wine_model.predicted_rating || 0).toFixed(1)}
                 </span>
                 <span style={{ fontSize: '1rem', color: 'var(--color-text-subtle)' }}>
-                  / 10.0 (Expert Median Rating Scale: 0 to 10)
+                  / 10.0 (Expert Panel Sensory Rating Scale: 0 to 10)
                 </span>
               </div>
+              {result.wine_model.test_mae !== null && result.wine_model.test_mae !== undefined && (
+                <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-subtle)' }}>
+                  Model Accuracy: <strong>Held-out test split MAE ±{result.wine_model.test_mae.toFixed(2)} rating points</strong>
+                </div>
+              )}
               <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
                 {result.wine_model.model_limitations ||
-                  'The model predicts sensory quality scores as evaluated by certified wine tasting panels. Note: This is an organoleptic quality rating and NOT a health score.'}
+                  'The model predicts sensory quality scores as evaluated by certified wine tasting panels for Portuguese Vinho Verde wines. Note: This is an organoleptic quality rating and NOT a health score.'}
               </p>
             </div>
           ) : (
             <div style={{ padding: 'var(--space-md)', backgroundColor: 'var(--color-surface-dim)', borderRadius: 'var(--radius-md)' }}>
               <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
-                ⚠️ {result.wine_model?.reason_if_unavailable || 'Sensory quality prediction requires all 11 physicochemical inputs (e.g. fixed acidity, volatile acidity, chlorides, sulfates). Basic analysis completed.'}
+                ⚠️ {result.wine_model?.reason_if_unavailable || 'Sensory quality prediction requires all 11 physicochemical inputs (fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free SO2, total SO2, density, pH, sulphates, alcohol). Basic analysis completed.'}
               </p>
             </div>
           )}
