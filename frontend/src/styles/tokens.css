@@ -1,0 +1,158 @@
+/**
+ * BQAS Design Tokens — Luminescent Precision Health-Tech Design System
+ * Supports Light, Dark, and High-Contrast Accessibility Modes.
+ */
+
+:root {
+  /* Fonts */
+  --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Primary Palettes (Deep Navy & Precision Electric Blue) */
+  --color-primary: #0b1f3a;
+  --color-primary-light: #163259;
+  --color-primary-container: #0b1f3a;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #d6e3ff;
+
+  --color-accent: #146ef5;
+  --color-accent-hover: #0d5ad1;
+  --color-accent-subtle: rgba(20, 110, 245, 0.08);
+
+  /* Surfaces & Canvas (Light Theme Default) */
+  --color-bg: #f8faff;
+  --color-bg-secondary: #f0f4fc;
+  --color-surface: #ffffff;
+  --color-surface-dim: #edf2fc;
+  --color-surface-bright: #ffffff;
+  --color-surface-container: #f4f7fd;
+  --color-surface-container-high: #e9effb;
+  --color-surface-glass: rgba(255, 255, 255, 0.78);
+  --color-surface-glass-border: rgba(255, 255, 255, 0.85);
+
+  /* Typography Colors */
+  --color-text-main: #101828;
+  --color-text-muted: #475467;
+  --color-text-subtle: #667085;
+  --color-text-on-primary: #ffffff;
+
+  /* Structural Borders & Lines */
+  --color-border: #e2e8f0;
+  --color-border-subtle: rgba(11, 31, 58, 0.08);
+  --color-border-strong: #cbd5e1;
+
+  /* Health & Status Indicators */
+  --color-favourable: #10b981;
+  --color-favourable-bg: #ecfdf5;
+  --color-favourable-border: #a7f3d0;
+  --color-favourable-text: #065f46;
+
+  --color-moderate: #2563eb;
+  --color-moderate-bg: #eff6ff;
+  --color-moderate-border: #bfdbfe;
+  --color-moderate-text: #1e40af;
+
+  --color-caution: #f59e0b;
+  --color-caution-bg: #fffbeb;
+  --color-caution-border: #fde68a;
+  --color-caution-text: #92400e;
+
+  --color-critical: #ef4444;
+  --color-critical-bg: #fef2f2;
+  --color-critical-border: #fecaca;
+  --color-critical-text: #991b1b;
+
+  /* Metric & Composition Colors */
+  --color-comp-typical: #3b82f6;
+  --color-comp-lower: #10b981;
+  --color-comp-higher: #f59e0b;
+  --color-comp-very-high: #ef4444;
+
+  /* Spacing */
+  --space-2xs: 0.25rem;  /* 4px */
+  --space-xs: 0.5rem;    /* 8px */
+  --space-sm: 0.75rem;   /* 12px */
+  --space-md: 1rem;      /* 16px */
+  --space-lg: 1.5rem;    /* 24px */
+  --space-xl: 2rem;      /* 32px */
+  --space-2xl: 3rem;     /* 48px */
+
+  /* Radii (Apple-grade Squircle) */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(11, 31, 58, 0.05);
+  --shadow-md: 0 4px 16px -2px rgba(11, 31, 58, 0.07), 0 2px 6px -1px rgba(11, 31, 58, 0.03);
+  --shadow-lg: 0 12px 32px -4px rgba(11, 31, 58, 0.1), 0 4px 12px -2px rgba(11, 31, 58, 0.04);
+  --shadow-glass: 0 8px 32px 0 rgba(11, 31, 58, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  --shadow-glow: 0 0 20px rgba(20, 110, 245, 0.25);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout Constants */
+  --header-height: 72px;
+  --sidebar-width: 270px;
+  --sidebar-collapsed-width: 76px;
+  --max-content-width: 1400px;
+}
+
+/* Dark Theme Overrides */
+[data-theme='dark'] {
+  --color-bg: #090e17;
+  --color-bg-secondary: #0d1522;
+  --color-surface: #121c2c;
+  --color-surface-dim: #0e1724;
+  --color-surface-bright: #172438;
+  --color-surface-container: #152033;
+  --color-surface-container-high: #1c2b44;
+  --color-surface-glass: rgba(18, 28, 44, 0.82);
+  --color-surface-glass-border: rgba(255, 255, 255, 0.1);
+
+  --color-text-main: #f8fafc;
+  --color-text-muted: #cbd5e1;
+  --color-text-subtle: #94a3b8;
+
+  --color-border: #1e293b;
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-strong: #334155;
+
+  --color-primary: #146ef5;
+  --color-primary-light: #2563eb;
+  --color-primary-container: #152238;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #93c5fd;
+
+  --color-accent: #38bdf8;
+  --color-accent-hover: #0ea5e9;
+  --color-accent-subtle: rgba(56, 189, 248, 0.12);
+
+  --color-favourable-bg: rgba(16, 185, 129, 0.14);
+  --color-favourable-border: rgba(16, 185, 129, 0.3);
+  --color-favourable-text: #34d399;
+
+  --color-moderate-bg: rgba(37, 99, 235, 0.14);
+  --color-moderate-border: rgba(37, 99, 235, 0.3);
+  --color-moderate-text: #60a5fa;
+
+  --color-caution-bg: rgba(245, 158, 11, 0.14);
+  --color-caution-border: rgba(245, 158, 11, 0.3);
+  --color-caution-text: #fbbf24;
+
+  --color-critical-bg: rgba(239, 68, 68, 0.14);
+  --color-critical-border: rgba(239, 68, 68, 0.3);
+  --color-critical-text: #f87171;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 32px -4px rgba(0, 0, 0, 0.65);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --shadow-glow: 0 0 24px rgba(56, 189, 248, 0.3);
+}
