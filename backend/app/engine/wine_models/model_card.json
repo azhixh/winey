@@ -1,0 +1,104 @@
+{
+  "model_name": "BQAS Wine Quality Sensory Predictor",
+  "model_version": "1.0.0",
+  "created_at_utc": "2026-10-20T18:07:28.993309+00:00",
+  "author": "Beverage Quality Analysis System (BQAS)",
+  "dataset_metadata": {
+    "dataset_name": "UCI Wine Quality Dataset",
+    "dataset_url": "https://archive.ics.uci.edu/dataset/186/wine+quality",
+    "raw_files": {
+      "red": "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv",
+      "white": "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv"
+    },
+    "citation": "P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. Modeling wine preferences by data mining from physicochemical properties. In Decision Support Systems, Elsevier, 47(4):547-553, 2009.",
+    "geographic_origin": "Vinho Verde region, Minho, Northwest Portugal",
+    "target_description": "Sensory wine quality rating on a 0-10 scale based on sensory evaluation by at least 3 certified wine experts (median grade).",
+    "feature_names": [
+      "fixed acidity",
+      "volatile acidity",
+      "citric acid",
+      "residual sugar",
+      "chlorides",
+      "free sulfur dioxide",
+      "total sulfur dioxide",
+      "density",
+      "pH",
+      "sulphates",
+      "alcohol"
+    ],
+    "input_dimension": 11,
+    "sample_counts": {
+      "red_wine": 1599,
+      "white_wine": 4898,
+      "total": 6497
+    }
+  },
+  "training_protocol": {
+    "train_test_split": "80% Train, 20% Held-Out Test",
+    "random_seed": 42,
+    "data_leakage_protection": "StandardScaler preprocessing is embedded in scikit-learn Pipeline and fitted exclusively on training splits.",
+    "architecture_choice": "Separate models trained for Red and White wine because phenolic composition, sulfur dioxide dynamics, and baseline acidity differ systematically between red and white winemaking (Cortez et al., 2009)."
+  },
+  "evaluation_summary": {
+    "red_wine": {
+      "algorithm": "random_forest_regressor",
+      "train_samples": 1279,
+      "test_samples": 320,
+      "models_compared": {
+        "dummy_mean_baseline": {
+          "mae": 0.6853,
+          "rmse": 0.8107,
+          "r2_score": -0.0056
+        },
+        "ridge_regression": {
+          "mae": 0.5036,
+          "rmse": 0.6245,
+          "r2_score": 0.4032
+        },
+        "random_forest_regressor": {
+          "mae": 0.422,
+          "rmse": 0.5483,
+          "r2_score": 0.5399
+        }
+      },
+      "selected_test_metrics": {
+        "mae": 0.422,
+        "rmse": 0.5483,
+        "r2_score": 0.5399
+      }
+    },
+    "white_wine": {
+      "algorithm": "random_forest_regressor",
+      "train_samples": 3918,
+      "test_samples": 980,
+      "models_compared": {
+        "dummy_mean_baseline": {
+          "mae": 0.675,
+          "rmse": 0.8806,
+          "r2_score": -0.0014
+        },
+        "ridge_regression": {
+          "mae": 0.5863,
+          "rmse": 0.7544,
+          "r2_score": 0.2652
+        },
+        "random_forest_regressor": {
+          "mae": 0.4195,
+          "rmse": 0.5901,
+          "r2_score": 0.5504
+        }
+      },
+      "selected_test_metrics": {
+        "mae": 0.4195,
+        "rmse": 0.5901,
+        "r2_score": 0.5504
+      }
+    }
+  },
+  "limitations_and_disclaimers": [
+    "Dataset represents Portuguese Vinho Verde wines and may not generalize to other wine regions, grape varieties, vintages, or production methods.",
+    "Sensory quality rating estimate only; does not predict health effects, safety, toxicity, or nutritional value.",
+    "Not a substitute for official chemical analysis, regulatory compliance certification, or expert sommelier tasting.",
+    "Does not measure bouquet, volatile phenols, oak maturation markers, or visual chromatic properties."
+  ]
+}

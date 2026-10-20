@@ -1,0 +1,187 @@
+{
+  "rules_version": "1.0.0",
+  "published_at": "2026-10-20",
+  "description": "Authoritative scientific thresholds, guideline limits, and scoring parameters for BQAS.",
+  "general_constants": {
+    "standard_drink_grams": 10.0,
+    "ethanol_density_g_ml": 0.789,
+    "sodium_benzoate_to_benzoic_acid_factor": 0.848,
+    "minimum_benchmark_samples": 100
+  },
+  "subscore_curve": {
+    "favourable": {
+      "max_ratio": 0.5,
+      "subscore": 100.0
+    },
+    "moderate": {
+      "min_ratio": 0.5,
+      "max_ratio": 1.0,
+      "start_subscore": 100.0,
+      "end_subscore": 60.0
+    },
+    "caution": {
+      "min_ratio": 1.0,
+      "max_ratio": 2.0,
+      "start_subscore": 60.0,
+      "end_subscore": 20.0
+    },
+    "high": {
+      "min_ratio": 2.0,
+      "max_ratio": 3.0,
+      "start_subscore": 20.0,
+      "end_subscore": 0.0
+    },
+    "extreme": {
+      "min_ratio": 3.0,
+      "subscore": 0.0
+    }
+  },
+  "critical_override": {
+    "capped_health_impact_score": 40.0,
+    "banner_color": "red",
+    "critical_thresholds": {
+      "caffeine_single_dose_exceeded": true,
+      "methanol_limit_exceeded": true
+    }
+  },
+  "composition_credits": {
+    "typical": 100.0,
+    "lower_than_typical": {
+      "high_is_bad": 100.0,
+      "other": 60.0
+    },
+    "higher_than_typical": {
+      "high_is_bad": 50.0,
+      "other": 100.0
+    },
+    "very_high": {
+      "high_is_bad": 20.0,
+      "other": 0.0
+    }
+  },
+  "confidence_levels": {
+    "high_threshold": 0.80,
+    "medium_threshold": 0.60
+  },
+  "guideline_rules": {
+    "sugars": {
+      "name": "Free sugars",
+      "display_unit": "g",
+      "risk_direction": "high_is_bad",
+      "ideal_target_g_day": 25.0,
+      "cap_limit_g_day": 50.0,
+      "applicable_limit_g": 25.0,
+      "weight": 1.0,
+      "source_organization": "World Health Organization (WHO)",
+      "publication_year": 2015,
+      "source_url": "https://who.int/news/item/04-03-2015-who-calls-on-countries-to-reduce-sugars-intake-among-adults-and-children",
+      "rationale": "WHO conditionally recommends reducing free sugars intake to below 5% of total energy (approx. 25 g/day for a 2,000 kcal diet) for lifelong health benefits, with a strong recommendation to remain below 10% (50 g/day)."
+    },
+    "caffeine": {
+      "name": "Caffeine",
+      "display_unit": "mg",
+      "risk_direction": "high_is_bad",
+      "weight": 1.0,
+      "single_dose_limit_adult_mg": 200.0,
+      "daily_limit_adult_mg": 400.0,
+      "daily_limit_pregnant_mg": 200.0,
+      "daily_limit_under_18_mg_per_kg": 3.0,
+      "is_critical": true,
+      "source_organization": "European Food Safety Authority (EFSA) / US FDA",
+      "publication_year": 2015,
+      "source_url": "https://www.efsa.europa.eu/en/efsajournal/pub/4102",
+      "rationale": "EFSA Scientific Opinion establishes 200 mg single dose for adults (approx. 3 mg/kg) and 400 mg daily as not raising safety concerns for healthy adults. In pregnancy, daily intake must remain below 200 mg. For children and adolescents, safe level is 3 mg/kg body weight per day."
+    },
+    "sodium_benzoate": {
+      "name": "Sodium benzoate (E211)",
+      "display_unit": "mg/L",
+      "risk_direction": "high_is_bad",
+      "weight": 1.0,
+      "conversion_factor_to_benzoic_acid": 0.848,
+      "adi_mg_per_kg_body_weight": 5.0,
+      "default_body_weight_kg": 60.0,
+      "source_organization": "European Food Safety Authority (EFSA) / JECFA",
+      "publication_year": 2016,
+      "source_url": "https://doi.org/10.2903/j.efsa.2016.4433",
+      "rationale": "Group Acceptable Daily Intake (ADI) of 5 mg/kg body weight per day expressed as benzoic acid."
+    },
+    "sulphites": {
+      "name": "Sulphites (as SO2)",
+      "display_unit": "mg/L",
+      "risk_direction": "high_is_bad",
+      "weight": 1.0,
+      "adi_mg_per_kg_body_weight": 0.7,
+      "default_body_weight_kg": 60.0,
+      "source_organization": "JECFA / EFSA",
+      "publication_year": 2016,
+      "source_url": "https://www.efsa.europa.eu/en/efsajournal/pub/4433",
+      "rationale": "Group ADI of 0.7 mg/kg body weight per day expressed as sulfur dioxide equivalent."
+    },
+    "alcohol": {
+      "name": "Alcohol",
+      "display_unit": "% ABV",
+      "risk_direction": "high_is_bad",
+      "weight": 1.0,
+      "no_safe_level": true,
+      "who_statement": "According to the World Health Organization (2023), there is no evidence of a threshold at which the carcinogenic and health risks of alcohol consumption are absent. No level of alcohol consumption is completely safe for health.",
+      "avoid_for_minors_and_pregnancy": true,
+      "source_organization": "World Health Organization (WHO) Regional Office for Europe",
+      "publication_year": 2023,
+      "source_url": "https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health",
+      "rationale": "Alcohol is a toxic, psychoactive, and Group 1 carcinogenic substance causally linked to 7 types of cancer."
+    },
+    "methanol": {
+      "name": "Methanol",
+      "display_unit": "g per L of pure alcohol",
+      "risk_direction": "high_is_bad",
+      "weight": 1.0,
+      "is_critical": true,
+      "max_limit_g_per_l_pure_alcohol": 10.0,
+      "verification_status": "verify_before_release",
+      "source_organization": "EU Spirit Drinks Regulations / Toxicology Literature",
+      "publication_year": 2019,
+      "source_url": "https://journals.sagepub.com/doi/10.1191/096032701718620864",
+      "rationale": "Methanol is metabolised into toxic formaldehyde and formic acid, causing metabolic acidosis and blindness. Strict legal maximums apply to distilled spirits (~10 g/L pure ethanol in fruit spirits)."
+    },
+    "sodium": {
+      "name": "Sodium",
+      "display_unit": "mg",
+      "risk_direction": "high_is_bad",
+      "weight": 1.0,
+      "daily_limit_adult_mg": 2000.0,
+      "source_organization": "World Health Organization (WHO)",
+      "publication_year": 2020,
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/salt-reduction",
+      "rationale": "WHO recommends adults consume less than 2,000 mg of sodium per day (equivalent to 5 g of salt) to reduce blood pressure and risk of cardiovascular disease."
+    },
+    "taurine": {
+      "name": "Taurine",
+      "display_unit": "mg",
+      "risk_direction": "info_only",
+      "weight": 0.0,
+      "customary_level_mg_per_l": 4000.0,
+      "source_organization": "European Food Safety Authority (EFSA) / BfR",
+      "publication_year": 2009,
+      "source_url": "https://www.bfr.bund.de/cm/349/frequently-asked-questions-on-caffeine-and-foods-containing-caffeine-including-energy-drinks.pdf",
+      "rationale": "Customary level in energy drinks (~4,000 mg/L) concluded by EFSA to not pose safety concerns for healthy consumers."
+    }
+  },
+  "reference_only_ingredients": [
+    "energy",
+    "carbohydrates",
+    "pH",
+    "bitterness_ibu",
+    "phosphoric_acid",
+    "b_vitamins",
+    "guarana",
+    "artificial_sweeteners",
+    "congeners",
+    "fixed_acidity",
+    "volatile_acidity",
+    "citric_acid",
+    "residual_sugar",
+    "chlorides",
+    "density",
+    "sulphates"
+  ]
+}
